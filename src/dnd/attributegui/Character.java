@@ -4,9 +4,9 @@
  */
 package dnd.attributegui;
 
-import dnd.attributegui.editions.BaseEdition;
 import dnd.attributegui.races.BaseRace;
 import dnd.attributegui.classes.BaseClass;
+import dnd.attributegui.generators.BaseGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class Character {
 
     List<ActionListener> _listeners = new ArrayList<ActionListener>();
 
-    private BaseEdition _edition;
+    private BaseGenerator _generator;
     private BaseRace _race;
     private BaseClass _class;
     private int[] _attributes;
@@ -29,7 +29,7 @@ public class Character {
 
     }
 
-    public void setEdition(BaseEdition e){ _edition = e; }
+    public void setGenerator(Object o){ _generator = (BaseGenerator)o; }
     public void setRace(BaseRace r){ _race = r; }
     public void setClass(BaseClass c){ _class = c; }
     public void setAttributes(int[] a){ _attributes = a; }

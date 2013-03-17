@@ -7,8 +7,8 @@ public class Wizard extends BaseClass {
      * @return
      */
     @Override
-    public int[] getBonuses() {
-        int[] local = {_bonuses[4], _bonuses[2], _bonuses[3], _bonuses[0], _bonuses[1], _bonuses[5]};
+    public int[] getRanks() {
+        int[] local = {4, 2, 3, 0, 1, 5};
         return local;
     }
 
@@ -26,7 +26,7 @@ public class Wizard extends BaseClass {
      * @return
      */
     @Override
-    public int[] getRank() {
+    public int[] getPreferred() {
         int[] local = {3, 4, 1};
         return local;
     }

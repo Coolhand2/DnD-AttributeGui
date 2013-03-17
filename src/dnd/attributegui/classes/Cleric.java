@@ -7,8 +7,8 @@ public class Cleric extends BaseClass {
      * @return
      */
     @Override
-    public int[] getBonuses() {
-        int[] local = {_bonuses[1], _bonuses[4], _bonuses[3], _bonuses[5], _bonuses[0], _bonuses[2]};
+    public int[] getRanks() {
+        int[] local = {1, 4, 3, 5, 0, 2};
         return local;
     }
 
@@ -26,7 +26,7 @@ public class Cleric extends BaseClass {
      * @return
      */
     @Override
-    public int[] getRank() {
+    public int[] getPreferred() {
         int[] local = {4, 0, 5};
         return local;
     }

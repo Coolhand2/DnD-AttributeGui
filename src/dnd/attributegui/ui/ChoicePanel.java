@@ -6,9 +6,7 @@ package dnd.attributegui.ui;
 
 import dnd.attributegui.Character;
 import dnd.attributegui.classes.*;
-import dnd.attributegui.editions.*;
 import dnd.attributegui.races.*;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
@@ -21,7 +19,7 @@ import javax.swing.JPanel;
  */
 public class ChoicePanel extends JPanel{
     private Character _character;
-    private JComboBox _editions;
+    private JComboBox _generators;
     private JComboBox _classes;
     private JComboBox _races;
     public ChoicePanel(Character c){
@@ -31,13 +29,13 @@ public class ChoicePanel extends JPanel{
         attachListeners();
     }
     private void loadPanel(){
-        String[] editions = {"", "DnD 4e", "DnD 3.5", "DnD 3.0", "Pathfinder"};
+        String[] generators = {"", "Normal Spread", "Specialist Spread", "Dual-Specialist", "Normal Roll", "Power Roll"};
         String[] classes = {"", "Ardent", "Avenger", "Barbarian", "Bard", "Battlemind", "Cleric", "Druid", "Fighter", "Invoker", "Monk", "Paladin", "PSion", "Ranger", "Rogue", "RunePriest", "Seeker", "Shaman", "Sorcerer", "Warden", "Warlock", "Warlord", "Wizard"};
         String[] races = {"", "Deva", "Dragonborn", "Dwarf", "Eladrin", "Elf", "Githzerai", "Gnome", "Goliath", "HalfElf", "HalfOrc", "Halfling", "Human", "Minotaur", "Shardmind", "Shifter", "Tiefling", "Wilden"};
 
-        _editions = new JComboBox<String>(editions);
-        _classes = new JComboBox<String>(classes);
-        _races = new JComboBox<String>(races);
+        _generators = new JComboBox(generators);
+        _classes = new JComboBox(classes);
+        _races = new JComboBox(races);
     }
     private void setupPanel(){
         GroupLayout layout = new GroupLayout(this);
@@ -45,7 +43,7 @@ public class ChoicePanel extends JPanel{
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        JLabel editionLabel = new JLabel("Edition: ");
+        JLabel editionLabel = new JLabel("Roll Type: ");
         JLabel classLabel = new JLabel("Class: ");
         JLabel raceLabel = new JLabel("Race: ");
 
@@ -54,7 +52,7 @@ public class ChoicePanel extends JPanel{
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(editionLabel)
-                        .addComponent(_editions))
+                        .addComponent(_generators))
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(classLabel)
@@ -73,7 +71,7 @@ public class ChoicePanel extends JPanel{
                         .addComponent(raceLabel))
                 .addGroup(
                     layout.createParallelGroup()
-                        .addComponent(_editions)
+                        .addComponent(_generators)
                         .addComponent(_classes)
                         .addComponent(_races))
 
@@ -81,9 +79,9 @@ public class ChoicePanel extends JPanel{
     }
 
     private void attachListeners(){
-        _editions.addActionListener(new ActionListener() {
+        _generators.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                _character.setEdition(new BaseEdition());
+                _character.setGenerator(_generators.getSelectedItem());
             }
         });
         _classes.addActionListener(new ActionListener() {

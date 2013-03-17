@@ -7,8 +7,8 @@ public class Sorcerer extends BaseClass {
      * @return
      */
     @Override
-    public int[] getBonuses() {
-        int[] local = {_bonuses[2], _bonuses[1], _bonuses[3], _bonuses[4], _bonuses[5], _bonuses[0]};
+    public int[] getRanks() {
+        int[] local = {2, 1, 3, 4, 5, 0};
         return local;
     }
 
@@ -26,7 +26,7 @@ public class Sorcerer extends BaseClass {
      * @return
      */
     @Override
-    public int[] getRank() {
+    public int[] getPreferred() {
         int[] local = {5, 1, 0};
         return local;
     }

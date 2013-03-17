@@ -26,8 +26,10 @@ public class Character {
     private BaseRace _race;
     private BaseClass _class;
     private int[] _attributes;
+    private int _level;
 
     public Character() {
+        _level = 1;
         _generator = new NormalSpread();
         _race = new Deva();
         _class = new Ardent();
@@ -44,14 +46,38 @@ public class Character {
     public void setClass(BaseClass c) {
         _class = c;
     }
+    
+    public void setLevel(int l) {
+        _level = l;
+    }
 
     public void generateAttributes() {
         int[] attributes = _generator.getAttributes();
         int[] bonuses = _race.getBonuses();
         int[] ranks = _class.getRanks();
+        int[] preferred = _class.getPreferred();
         int[] sums = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < 6; i++) {
             sums[i] += attributes[ranks[i]] + bonuses[i];
+        }
+        for( int i = 0; i < _level; i++) {
+            switch(i){
+                case 4:
+                case 8:
+                case 14:
+                case 18:
+                case 24:
+                case 28:
+                    sums[preferred[0]]++;
+                    sums[preferred[1]]++;
+                    break;
+                case 11:
+                case 21:
+                    for(int k = 0; k < 6; k++){
+                        sums[k]++;
+                    }
+                    break;
+            }
         }
         _attributes = sums;
         notifyListeners();

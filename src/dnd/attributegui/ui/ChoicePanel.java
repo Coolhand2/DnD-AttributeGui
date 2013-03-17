@@ -15,6 +15,10 @@ import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -26,6 +30,7 @@ public class ChoicePanel extends JPanel {
     private JComboBox _generatorBox;
     private JComboBox _classBox;
     private JComboBox _raceBox;
+    private JSpinner _levelSpinner;
     private BaseClass[] _classes = {
         new Ardent(), new Avenger(), new Barbarian(), new Bard(),
         new Battlemind(), new Cleric(), new Druid(), new Fighter(),
@@ -69,6 +74,7 @@ public class ChoicePanel extends JPanel {
         _generatorBox = new JComboBox(generators);
         _classBox = new JComboBox(classes);
         _raceBox = new JComboBox(races);
+        _levelSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
     }
 
     private void setupPanel() {
@@ -80,6 +86,7 @@ public class ChoicePanel extends JPanel {
         JLabel editionLabel = new JLabel("Roll Type: ");
         JLabel classLabel = new JLabel("Class: ");
         JLabel raceLabel = new JLabel("Race: ");
+        JLabel levelLabel = new JLabel("Level: ");
 
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
@@ -94,19 +101,25 @@ public class ChoicePanel extends JPanel {
                 .addGroup(
                 layout.createParallelGroup()
                 .addComponent(raceLabel)
-                .addComponent(_raceBox)));
+                .addComponent(_raceBox))
+                .addGroup(
+                layout.createParallelGroup()
+                .addComponent(levelLabel)
+                .addComponent(_levelSpinner)));
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                 .addGroup(
                 layout.createParallelGroup()
                 .addComponent(editionLabel)
                 .addComponent(classLabel)
-                .addComponent(raceLabel))
+                .addComponent(raceLabel)
+                .addComponent(levelLabel))
                 .addGroup(
                 layout.createParallelGroup()
                 .addComponent(_generatorBox)
                 .addComponent(_classBox)
-                .addComponent(_raceBox)));
+                .addComponent(_raceBox)
+                .addComponent(_levelSpinner)));
     }
 
     private void attachListeners() {
@@ -129,6 +142,12 @@ public class ChoicePanel extends JPanel {
                 int index = _raceBox.getSelectedIndex();
                 BaseRace r = _races[index];
                 _character.setRace(r);
+            }
+        });
+        _levelSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                _character.setLevel(Integer.parseInt(_levelSpinner.getValue().toString()));
             }
         });
     }

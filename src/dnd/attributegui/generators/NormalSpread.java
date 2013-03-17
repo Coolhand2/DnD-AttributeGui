@@ -8,14 +8,15 @@ package dnd.attributegui.generators;
  *
  * @author mike
  */
-public class NormalSpread extends BaseGenerator{
+public class NormalSpread extends BaseGenerator {
+
     @Override
-    public String getName(){
+    public String getName() {
         return "Standard Array";
     }
-    
+
     @Override
-    public int[] getAttributes(){
+    public int[] getAttributes() {
         int[] local = {16, 14, 13, 12, 11, 10};
         return local;
     }

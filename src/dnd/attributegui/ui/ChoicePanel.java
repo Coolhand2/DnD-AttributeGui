@@ -15,26 +15,26 @@ import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 /**
  *
  * @author Mike
  */
-public class ChoicePanel extends JPanel{
-    
+public class ChoicePanel extends JPanel {
+
     private Character _character;
     private JComboBox _generatorBox;
     private JComboBox _classBox;
     private JComboBox _raceBox;
-    
     private BaseClass[] _classes = {
-        new Ardent(), new Avenger(), new Barbarian(), new Bard(), 
-        new Battlemind(), new Cleric(), new Druid(), new Fighter(), 
-        new Invoker(), new Monk(), new Paladin(), new Psion(), new Ranger(), 
-        new Rogue(), new RunePriest(), new Seeker(), new Shaman(), 
+        new Ardent(), new Avenger(), new Barbarian(), new Bard(),
+        new Battlemind(), new Cleric(), new Druid(), new Fighter(),
+        new Invoker(), new Monk(), new Paladin(), new Psion(), new Ranger(),
+        new Rogue(), new RunePriest(), new Seeker(), new Shaman(),
         new Sorcerer(), new Warden(), new Warlock(), new Warlord(), new Wizard()
     };
     private BaseRace[] _races = {
-        new Deva(), new Dragonborn(), new Dwarf(), new Eladrin(), new Elf(), 
+        new Deva(), new Dragonborn(), new Dwarf(), new Eladrin(), new Elf(),
         new Githzerai(1), new Githzerai(3), new Gnome(), new Goliath(),
         new HalfElf(), new HalfOrc(), new Halfling(), new Human(0), new Human(1),
         new Human(2), new Human(3), new Human(4), new Human(5), new Minotaur(2),
@@ -45,31 +45,33 @@ public class ChoicePanel extends JPanel{
         new NormalSpread(), new SpecialSpread(), new DualSpecSpread(),
         new NormalRoll(), new PowerRoll()
     };
-    
-    public ChoicePanel(Character c){
+
+    public ChoicePanel(Character c) {
         _character = c;
         loadPanel();
         setupPanel();
         attachListeners();
     }
-    private void loadPanel(){
+
+    private void loadPanel() {
         Vector<String> generators = new Vector<String>();
-        for(BaseGenerator g : _generators){
+        for (BaseGenerator g : _generators) {
             generators.add(g.getName());
         }
         Vector<String> classes = new Vector<String>();
-        for(BaseClass c : _classes){
+        for (BaseClass c : _classes) {
             classes.add(c.getName());
         }
         Vector<String> races = new Vector<String>();
-        for(BaseRace r : _races){
+        for (BaseRace r : _races) {
             races.add(r.getName());
         }
         _generatorBox = new JComboBox(generators);
         _classBox = new JComboBox(classes);
         _raceBox = new JComboBox(races);
     }
-    private void setupPanel(){
+
+    private void setupPanel() {
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -80,37 +82,34 @@ public class ChoicePanel extends JPanel{
         JLabel raceLabel = new JLabel("Race: ");
 
         layout.setVerticalGroup(
-            layout.createSequentialGroup()
+                layout.createSequentialGroup()
                 .addGroup(
-                    layout.createParallelGroup()
-                        .addComponent(editionLabel)
-                        .addComponent(_generatorBox))
+                layout.createParallelGroup()
+                .addComponent(editionLabel)
+                .addComponent(_generatorBox))
                 .addGroup(
-                    layout.createParallelGroup()
-                        .addComponent(classLabel)
-                        .addComponent(_classBox))
+                layout.createParallelGroup()
+                .addComponent(classLabel)
+                .addComponent(_classBox))
                 .addGroup(
-                    layout.createParallelGroup()
-                        .addComponent(raceLabel)
-                        .addComponent(_raceBox))
-        );
+                layout.createParallelGroup()
+                .addComponent(raceLabel)
+                .addComponent(_raceBox)));
         layout.setHorizontalGroup(
-            layout.createSequentialGroup()
+                layout.createSequentialGroup()
                 .addGroup(
-                    layout.createParallelGroup()
-                        .addComponent(editionLabel)
-                        .addComponent(classLabel)
-                        .addComponent(raceLabel))
+                layout.createParallelGroup()
+                .addComponent(editionLabel)
+                .addComponent(classLabel)
+                .addComponent(raceLabel))
                 .addGroup(
-                    layout.createParallelGroup()
-                        .addComponent(_generatorBox)
-                        .addComponent(_classBox)
-                        .addComponent(_raceBox))
-
-        );
+                layout.createParallelGroup()
+                .addComponent(_generatorBox)
+                .addComponent(_classBox)
+                .addComponent(_raceBox)));
     }
 
-    private void attachListeners(){
+    private void attachListeners() {
         _generatorBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 int index = _generatorBox.getSelectedIndex();

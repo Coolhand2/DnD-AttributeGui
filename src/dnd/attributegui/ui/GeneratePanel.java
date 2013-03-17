@@ -15,22 +15,23 @@ import javax.swing.JPanel;
  *
  * @author Mike
  */
-public class GeneratePanel extends JPanel{
+public class GeneratePanel extends JPanel {
 
     private Character _character;
     private JButton _button;
 
-    public GeneratePanel(Character c){
+    public GeneratePanel(Character c) {
         _character = c;
         loadPanel();
         setupPanel();
         attachListeners();
     }
 
-    private void loadPanel(){
+    private void loadPanel() {
         _button = new JButton("Generate!");
     }
-    private void setupPanel(){
+
+    private void setupPanel() {
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -38,17 +39,16 @@ public class GeneratePanel extends JPanel{
 
 
         layout.setVerticalGroup(
-            layout.createSequentialGroup()
-                .addComponent(_button)
-        );
+                layout.createSequentialGroup()
+                .addComponent(_button));
         layout.setHorizontalGroup(
-            layout.createSequentialGroup()
-                .addComponent(_button)
-        );
+                layout.createSequentialGroup()
+                .addComponent(_button));
     }
-    private void attachListeners(){
-        _button.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt){
+
+    private void attachListeners() {
+        _button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 _character.generateAttributes();
             }
         });

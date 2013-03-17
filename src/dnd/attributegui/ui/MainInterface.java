@@ -44,17 +44,15 @@ public class MainInterface extends JFrame {
         mainLayout.setAutoCreateContainerGaps(true);
 
         mainLayout.setVerticalGroup(
-            mainLayout.createSequentialGroup()
+                mainLayout.createSequentialGroup()
                 .addComponent(choicePanel)
                 .addComponent(generatePanel)
-                .addComponent(resultPanel)
-        );
+                .addComponent(resultPanel));
         mainLayout.setHorizontalGroup(
-            mainLayout.createParallelGroup()
+                mainLayout.createParallelGroup()
                 .addComponent(choicePanel)
                 .addComponent(generatePanel)
-                .addComponent(resultPanel)
-        );
+                .addComponent(resultPanel));
 
         pack();
 

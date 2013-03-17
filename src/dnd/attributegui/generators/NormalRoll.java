@@ -5,28 +5,31 @@
 package dnd.attributegui.generators;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  *
  * @author mike
  */
-public class NormalRoll extends BaseGenerator{
+public class NormalRoll extends BaseGenerator {
+
     @Override
-    public String getName(){
+    public String getName() {
         return "Normal Roll";
     }
-    
+
     @Override
-    public int[] getAttributes(){
+    public int[] getAttributes() {
+        Random r = new Random();
         int[] local = {0, 0, 0, 0, 0, 0};
-        for(int i = 0; i < 6; i++){
-            double[] rolls = {0.0, 0.0, 0.0, 0.0};
-            for(int k = 0; k < 4; k++){
-                rolls[k] = Math.random() % 6 + 1;
+        for (int i = 0; i < 6; i++) {
+            int[] rolls = {0, 0, 0, 0};
+            for (int k = 0; k < 4; k++) {
+                rolls[k] = r.nextInt(6) + 1;
             }
             Arrays.sort(rolls);
-            double sum = rolls[1] + rolls[2] + rolls[3];
-            local[i] = Integer.parseInt(String.valueOf(sum));
+            int sum = rolls[1] + rolls[2] + rolls[3];
+            local[i] = sum;
         }
         return local;
     }

@@ -9,11 +9,12 @@ package dnd.attributegui.generators;
  * @author mike
  */
 public class BaseGenerator {
-    public String getName(){
+
+    public String getName() {
         return "BaseGenerator";
     }
-    
-    public int[] getAttributes(){
+
+    public int[] getAttributes() {
         int[] local = {0, 0, 0, 0, 0, 0};
         return local;
     }

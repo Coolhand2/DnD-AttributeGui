@@ -17,9 +17,10 @@ public class DnDAttributeGui {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable(){
+        EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new MainInterface(new Character());
+                MainInterface mainInterface = new MainInterface(new Character());
             }
         });
     }

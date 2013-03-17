@@ -115,6 +115,7 @@ public class ResultPanel extends JPanel{
         );}
     private void attachListeners(){
         _character.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent evt){
                 updateValues(_character.getAttributes());
             }

@@ -29,12 +29,11 @@ public class Character {
 
     }
 
-    public void setGenerator(Object o){ _generator = (BaseGenerator)o; }
+    public void setGenerator(BaseGenerator g){ _generator = g; }
     public void setRace(BaseRace r){ _race = r; }
     public void setClass(BaseClass c){ _class = c; }
-    public void setAttributes(int[] a){ _attributes = a; }
     public void generateAttributes(){
-        rollAttributes();
+        int[] attributes = _generator.getAttributes();
         int[] bonuses = _race.getBonuses();
         int[] ranks = _class.getRanks();
         int[] sums = {0, 0, 0, 0, 0, 0};
@@ -49,12 +48,8 @@ public class Character {
         _listeners.add(al);
     }
     private void rollAttributes(){
-        _attributes[0] = 18;
-        _attributes[1] = 15;
-        _attributes[2] = 14;
-        _attributes[3] = 10;
-        _attributes[4] = 10;
-        _attributes[5] = 8;
+        int[] local = {18, 15, 14, 10, 10, 8};
+        _attributes = local;
     }
     private void notifyListeners(){
         for(ActionListener al : _listeners) {

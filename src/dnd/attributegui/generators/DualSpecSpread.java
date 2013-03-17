@@ -8,13 +8,15 @@ package dnd.attributegui.generators;
  *
  * @author mike
  */
-public class BaseGenerator {
+public class DualSpecSpread extends BaseGenerator {
+    @Override
     public String getName(){
-        return "BaseGenerator";
+        return "Dual-Specialized Array";
     }
     
+    @Override
     public int[] getAttributes(){
-        int[] local = {0, 0, 0, 0, 0, 0};
+        int[] local = {16, 16, 12, 11, 11, 8};
         return local;
     }
 }

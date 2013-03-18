@@ -4,16 +4,14 @@
  */
 package dnd.attributegui;
 
-import dnd.attributegui.classes.Ardent;
-import dnd.attributegui.races.BaseRace;
-import dnd.attributegui.classes.BaseClass;
-import dnd.attributegui.generators.BaseGenerator;
-import dnd.attributegui.generators.NormalSpread;
-import dnd.attributegui.races.Deva;
+import dnd.attributegui.classes.*;
+import dnd.attributegui.generators.*;
+import dnd.attributegui.races.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  *
@@ -21,19 +19,64 @@ import java.util.List;
  */
 public class Character {
 
-    List<ActionListener> _listeners = new ArrayList<ActionListener>();
+    List<ActionListener> _listeners = new ArrayList<>();
     private BaseGenerator _generator;
     private BaseRace _race;
     private BaseClass _class;
     private int[] _attributes;
     private int _level;
+    private Vector<ClassMap> _classMap;
+
+
+    public static final BaseClass[] CLASSES = {
+        new Ardent(), new Avenger(), new Barbarian(), new Bard(),
+        new Battlemind(), new Cleric(), new Druid(), new Fighter(),
+        new Invoker(), new Monk(), new Paladin(), new Psion(), new Ranger(),
+        new Rogue(), new RunePriest(), new Seeker(), new Shaman(),
+        new Sorcerer(), new Warden(), new Warlock(), new Warlord(), new Wizard()
+    };
+    public static final BaseRace[] RACES = {
+        new Deva(), new Dragonborn(), new Dwarf(), new Eladrin(), new Elf(),
+        new Githzerai(1), new Githzerai(3), new Gnome(), new Goliath(),
+        new HalfElf(), new HalfOrc(), new Halfling(), new Human(0), new Human(1),
+        new Human(2), new Human(3), new Human(4), new Human(5), new Minotaur(2),
+        new Minotaur(4), new Shardmind(4), new Shardmind(5), new Shifter(),
+        new Tiefling(), new Wilden(2), new Wilden(1)
+    };
+    public static final BaseGenerator[] GENERATORS = {
+        new NormalSpread(), new SpecialSpread(), new DualSpecSpread(),
+        new NormalRoll(), new PowerRoll()
+    };
 
     public Character() {
         _level = 1;
         _generator = new NormalSpread();
         _race = new Deva();
         _class = new Ardent();
+        _classMap = new Vector<>();
+
+        BaseGenerator g = new SpecialSpread();
+        for(BaseClass bc : CLASSES){
+            for(BaseRace br : RACES){
+                int[] attributes = g.getAttributes();
+                int[] bonuses = br.getBonuses();
+                int[] ranks = bc.getRanks();
+                int[] preferred = bc.getPreferred();
+                int[] sums = {0, 0, 0, 0, 0, 0};
+                for( int i = 0; i < 6; i++){
+                    sums[i] += attributes[ranks[i]] + bonuses[i];
+                }
+                float average = 0;
+                for(int index : preferred) {
+                    average += sums[index];
+                }
+                average /= 3;
+                ClassMap cm = new ClassMap(bc, br, Math.round(average));
+                _classMap.add(cm);
+            }
+        }
     }
+
 
     public void setGenerator(BaseGenerator g) {
         _generator = g;
@@ -46,7 +89,7 @@ public class Character {
     public void setClass(BaseClass c) {
         _class = c;
     }
-    
+
     public void setLevel(int l) {
         _level = l;
     }
@@ -100,5 +143,45 @@ public class Character {
         for (ActionListener al : _listeners) {
             al.actionPerformed((ActionEvent) null);
         }
+    }
+
+    public BaseClass getClassType(){
+        return _class;
+    }
+
+    public Vector<BaseRace> getPreferredRaces(){
+        Vector<BaseRace> br = new Vector<>();
+        for(ClassMap item : _classMap){
+            if(item.getClassType().getName().equals(_class.getName())){
+                if(item.getAverage() == 16) {
+                    br.add(item.getRace());
+                }
+            }
+        }
+        return br;
+    }
+
+    public Vector<BaseRace> getAverageRaces(){
+        Vector<BaseRace> br = new Vector<>();
+        for(ClassMap item : _classMap){
+            if(item.getClassType().getName().equals(_class.getName())){
+                if(item.getAverage() == 15) {
+                    br.add(item.getRace());
+                }
+            }
+        }
+        return br;
+    }
+
+    public Vector<BaseRace> getPoorRaces(){
+        Vector<BaseRace> br = new Vector<>();
+        for(ClassMap item : _classMap){
+            if(item.getClassType().getName().equals(_class.getName())){
+                if(item.getAverage() == 14) {
+                    br.add(item.getRace());
+                }
+            }
+        }
+        return br;
     }
 }

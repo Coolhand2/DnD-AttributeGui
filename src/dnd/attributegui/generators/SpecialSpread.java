@@ -17,7 +17,7 @@ public class SpecialSpread extends BaseGenerator {
 
     @Override
     public int[] getAttributes() {
-        int[] local = {18, 15, 14, 10, 10, 8};
+        int[] local = {18, 14, 11, 10, 10, 8};
         return local;
     }
 }

@@ -17,7 +17,7 @@ public class NormalSpread extends BaseGenerator {
 
     @Override
     public int[] getAttributes() {
-        int[] local = {16, 14, 13, 12, 11, 10};
+        int[] local = {16, 14, 14, 11, 10, 10};
         return local;
     }
 }

@@ -10,12 +10,15 @@ import dnd.attributegui.generators.*;
 import dnd.attributegui.races.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Vector;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.MutableComboBoxModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -31,49 +34,40 @@ public class ChoicePanel extends JPanel {
     private JComboBox _classBox;
     private JComboBox _raceBox;
     private JSpinner _levelSpinner;
-    private BaseClass[] _classes = {
-        new Ardent(), new Avenger(), new Barbarian(), new Bard(),
-        new Battlemind(), new Cleric(), new Druid(), new Fighter(),
-        new Invoker(), new Monk(), new Paladin(), new Psion(), new Ranger(),
-        new Rogue(), new RunePriest(), new Seeker(), new Shaman(),
-        new Sorcerer(), new Warden(), new Warlock(), new Warlord(), new Wizard()
-    };
-    private BaseRace[] _races = {
-        new Deva(), new Dragonborn(), new Dwarf(), new Eladrin(), new Elf(),
-        new Githzerai(1), new Githzerai(3), new Gnome(), new Goliath(),
-        new HalfElf(), new HalfOrc(), new Halfling(), new Human(0), new Human(1),
-        new Human(2), new Human(3), new Human(4), new Human(5), new Minotaur(2),
-        new Minotaur(4), new Shardmind(4), new Shardmind(5), new Shifter(),
-        new Tiefling(), new Wilden(2), new Wilden(1)
-    };
-    private BaseGenerator[] _generators = {
-        new NormalSpread(), new SpecialSpread(), new DualSpecSpread(),
-        new NormalRoll(), new PowerRoll()
-    };
+    private ActionListener _raceListener;
 
     public ChoicePanel(Character c) {
         _character = c;
+        _raceListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                Object index = _raceBox.getSelectedItem();
+                for(BaseRace br : Character.RACES){
+                    if(br.getName().equals(index.toString())){
+                        _character.setRace(br);
+                    }
+                }
+            }
+        };
         loadPanel();
         setupPanel();
         attachListeners();
     }
 
     private void loadPanel() {
-        Vector<String> generators = new Vector<String>();
-        for (BaseGenerator g : _generators) {
+        Vector<String> generators = new Vector<>();
+        for (BaseGenerator g : Character.GENERATORS) {
             generators.add(g.getName());
         }
-        Vector<String> classes = new Vector<String>();
-        for (BaseClass c : _classes) {
+        Vector<String> classes = new Vector<>();
+        for (BaseClass c : Character.CLASSES) {
             classes.add(c.getName());
         }
-        Vector<String> races = new Vector<String>();
-        for (BaseRace r : _races) {
-            races.add(r.getName());
-        }
+
         _generatorBox = new JComboBox(generators);
         _classBox = new JComboBox(classes);
-        _raceBox = new JComboBox(races);
+        _raceBox = new JComboBox();
+        setPreferredRaces();
         _levelSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
     }
 
@@ -124,31 +118,48 @@ public class ChoicePanel extends JPanel {
 
     private void attachListeners() {
         _generatorBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 int index = _generatorBox.getSelectedIndex();
-                BaseGenerator g = _generators[index];
+                BaseGenerator g = Character.GENERATORS[index];
                 _character.setGenerator(g);
             }
         });
         _classBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+            public void actionPerformed(ActionEvent e) {
                 int index = _classBox.getSelectedIndex();
-                BaseClass c = _classes[index];
+                BaseClass c = Character.CLASSES[index];
                 _character.setClass(c);
+                _raceBox.removeActionListener(_raceListener);
+                setPreferredRaces();
+                _raceBox.addActionListener(_raceListener);
             }
         });
-        _raceBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                int index = _raceBox.getSelectedIndex();
-                BaseRace r = _races[index];
-                _character.setRace(r);
-            }
-        });
+        _raceBox.addActionListener(_raceListener);
         _levelSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
                 _character.setLevel(Integer.parseInt(_levelSpinner.getValue().toString()));
             }
         });
+    }
+
+    private void setPreferredRaces(){
+        _raceBox.removeAllItems();
+        Vector<BaseRace> preferred = _character.getPreferredRaces();
+        Vector<BaseRace> average = _character.getAverageRaces();
+        Vector<BaseRace> poor = _character.getPoorRaces();
+        for(BaseRace item : preferred){
+            _raceBox.addItem(item.getName());
+        }
+        _raceBox.addItem("-------");
+        for(BaseRace item : average){
+            _raceBox.addItem(item.getName());
+        }
+        _raceBox.addItem("-------");
+        for(BaseRace item : poor){
+            _raceBox.addItem(item.getName());
+        }
+        _character.setRace(preferred.elementAt(0));
     }
 }

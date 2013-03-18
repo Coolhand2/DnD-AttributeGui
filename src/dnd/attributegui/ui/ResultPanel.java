@@ -53,8 +53,17 @@ public class ResultPanel extends JPanel{
         JLabel charismaLabel = new JLabel("CHA");
         JLabel wisdomLabel = new JLabel("WIS");
 
+        JLabel attributeTitle = new JLabel("Attribute");
+        JLabel attributeValue = new JLabel("Value");
+        JLabel attributeMod = new JLabel("Modifier");
+
         layout.setVerticalGroup(
             layout.createSequentialGroup()
+                .addGroup(
+                    layout.createParallelGroup()
+                        .addComponent(attributeTitle)
+                        .addComponent(attributeValue)
+                        .addComponent(attributeMod))
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(strengthLabel)
@@ -90,6 +99,7 @@ public class ResultPanel extends JPanel{
             layout.createSequentialGroup()
                 .addGroup(
                     layout.createParallelGroup()
+                        .addComponent(attributeTitle)
                         .addComponent(strengthLabel)
                         .addComponent(dexterityLabel)
                         .addComponent(constitutionLabel)
@@ -98,6 +108,7 @@ public class ResultPanel extends JPanel{
                         .addComponent(charismaLabel))
                 .addGroup(
                     layout.createParallelGroup()
+                        .addComponent(attributeValue)
                         .addComponent(_strengthValue)
                         .addComponent(_dexterityValue)
                         .addComponent(_constitutionValue)
@@ -106,6 +117,7 @@ public class ResultPanel extends JPanel{
                         .addComponent(_charismaValue))
                 .addGroup(
                     layout.createParallelGroup()
+                        .addComponent(attributeMod)
                         .addComponent(_strengthMod)
                         .addComponent(_dexterityMod)
                         .addComponent(_constitutionMod)

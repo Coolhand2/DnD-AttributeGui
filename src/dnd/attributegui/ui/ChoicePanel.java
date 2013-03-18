@@ -38,17 +38,19 @@ public class ChoicePanel extends JPanel {
 
     public ChoicePanel(Character c) {
         _character = c;
+
         _raceListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 Object index = _raceBox.getSelectedItem();
-                for(BaseRace br : Character.RACES){
-                    if(br.getName().equals(index.toString())){
+                for (BaseRace br : Character.RACES) {
+                    if (br.getName().equals(index.toString())) {
                         _character.setRace(br);
                     }
                 }
             }
         };
+
         loadPanel();
         setupPanel();
         attachListeners();
@@ -144,20 +146,20 @@ public class ChoicePanel extends JPanel {
         });
     }
 
-    private void setPreferredRaces(){
+    private void setPreferredRaces() {
         _raceBox.removeAllItems();
         Vector<BaseRace> preferred = _character.getPreferredRaces();
         Vector<BaseRace> average = _character.getAverageRaces();
         Vector<BaseRace> poor = _character.getPoorRaces();
-        for(BaseRace item : preferred){
+        for (BaseRace item : preferred) {
             _raceBox.addItem(item.getName());
         }
         _raceBox.addItem("-------");
-        for(BaseRace item : average){
+        for (BaseRace item : average) {
             _raceBox.addItem(item.getName());
         }
         _raceBox.addItem("-------");
-        for(BaseRace item : poor){
+        for (BaseRace item : poor) {
             _raceBox.addItem(item.getName());
         }
         _character.setRace(preferred.elementAt(0));

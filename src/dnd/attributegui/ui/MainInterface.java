@@ -22,7 +22,7 @@ public class MainInterface extends JFrame {
         _character = c;
         setupFrame();
         loadFrame();
-        setVisible(true);
+        pack();
     }
 
     private void setupFrame() {
@@ -33,9 +33,9 @@ public class MainInterface extends JFrame {
     private void loadFrame() {
 
         Container mainPanel = getContentPane();
-        JPanel choicePanel = new ChoicePanel(_character);
-        JPanel generatePanel = new GeneratePanel(_character);
-        JPanel resultPanel = new ResultPanel(_character);
+        ChoicePanel choicePanel = new ChoicePanel(_character);
+        GeneratePanel generatePanel = new GeneratePanel(_character);
+        ResultPanel resultPanel = new ResultPanel(_character);
 
 
         GroupLayout mainLayout = new GroupLayout(mainPanel);
@@ -44,17 +44,23 @@ public class MainInterface extends JFrame {
         mainLayout.setAutoCreateContainerGaps(true);
 
         mainLayout.setVerticalGroup(
+                mainLayout.createParallelGroup()
+                .addGroup(
                 mainLayout.createSequentialGroup()
                 .addComponent(choicePanel)
-                .addComponent(generatePanel)
-                .addComponent(resultPanel));
+                .addComponent(generatePanel))
+                .addGroup(
+                mainLayout.createParallelGroup()
+                .addComponent(resultPanel)));
         mainLayout.setHorizontalGroup(
+                mainLayout.createSequentialGroup()
+                .addGroup(
                 mainLayout.createParallelGroup()
                 .addComponent(choicePanel)
-                .addComponent(generatePanel)
-                .addComponent(resultPanel));
-
-        pack();
+                .addComponent(generatePanel))
+                .addGroup(
+                mainLayout.createParallelGroup()
+                .addComponent(resultPanel)));
 
     }
 }

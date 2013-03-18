@@ -4,10 +4,10 @@
  */
 package dnd.attributegui.ui;
 
+import dnd.attributegui.classes.BaseClass;
 import dnd.attributegui.Character;
-import dnd.attributegui.classes.*;
-import dnd.attributegui.generators.*;
-import dnd.attributegui.races.*;
+import dnd.attributegui.generators.BaseGenerator;
+import dnd.attributegui.races.BaseRace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;

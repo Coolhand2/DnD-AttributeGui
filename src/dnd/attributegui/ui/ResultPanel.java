@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 /**
  *
  * @author Mike
@@ -57,6 +58,10 @@ public class ResultPanel extends JPanel{
         JLabel attributeValue = new JLabel("Value");
         JLabel attributeMod = new JLabel("Modifier");
 
+        JSeparator separatorOne = new JSeparator(JSeparator.HORIZONTAL);
+        JSeparator separatorTwo = new JSeparator(JSeparator.HORIZONTAL);
+        JSeparator separatorThree = new JSeparator(JSeparator.HORIZONTAL);
+
         layout.setVerticalGroup(
             layout.createSequentialGroup()
                 .addGroup(
@@ -64,6 +69,11 @@ public class ResultPanel extends JPanel{
                         .addComponent(attributeTitle)
                         .addComponent(attributeValue)
                         .addComponent(attributeMod))
+                .addGroup(
+                    layout.createParallelGroup()
+                        .addComponent(separatorOne)
+                        .addComponent(separatorTwo)
+                        .addComponent(separatorThree))
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(strengthLabel)
@@ -100,6 +110,7 @@ public class ResultPanel extends JPanel{
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(attributeTitle)
+                        .addComponent(separatorOne)
                         .addComponent(strengthLabel)
                         .addComponent(dexterityLabel)
                         .addComponent(constitutionLabel)
@@ -109,6 +120,7 @@ public class ResultPanel extends JPanel{
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(attributeValue)
+                        .addComponent(separatorTwo)
                         .addComponent(_strengthValue)
                         .addComponent(_dexterityValue)
                         .addComponent(_constitutionValue)
@@ -118,6 +130,7 @@ public class ResultPanel extends JPanel{
                 .addGroup(
                     layout.createParallelGroup()
                         .addComponent(attributeMod)
+                        .addComponent(separatorThree)
                         .addComponent(_strengthMod)
                         .addComponent(_dexterityMod)
                         .addComponent(_constitutionMod)

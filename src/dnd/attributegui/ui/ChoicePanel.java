@@ -10,8 +10,6 @@ import dnd.attributegui.generators.*;
 import dnd.attributegui.races.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Vector;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -19,7 +17,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.MutableComboBoxModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -61,11 +58,13 @@ public class ChoicePanel extends JPanel {
         for (BaseClass c : Character.CLASSES) {
             classes.add(c.getName());
         }
-
+        Vector<String> races = new Vector<>();
+        for (BaseRace r : Character.RACES) {
+            races.add(r.getName());
+        }
         _generatorBox = new JComboBox(generators);
         _classBox = new JComboBox(classes);
-        _raceBox = new JComboBox();
-        setPreferredRaces();
+        _raceBox = new JComboBox(races);
         _levelSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
     }
 
@@ -160,24 +159,24 @@ public class ChoicePanel extends JPanel {
         _classBox.addActionListener(_classListener);
         _raceBox.addActionListener(_raceListener);
 
-        _classLock.addActionListener(new ActionListener(){
+        _classLock.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent evt){
+            public void actionPerformed(ActionEvent evt) {
                 _classBox.setEnabled(_classLocked);
                 _classLocked = !_classLocked;
-                if(_classLocked){
+                if (_classLocked) {
                     _classLock.setText("Unlock");
                 } else {
                     _classLock.setText("Lock");
                 }
             }
         });
-        _raceLock.addActionListener(new ActionListener(){
+        _raceLock.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent evt){
+            public void actionPerformed(ActionEvent evt) {
                 _raceBox.setEnabled(_raceLocked);
                 _raceLocked = !_raceLocked;
-                if(_raceLocked){
+                if (_raceLocked) {
                     _raceLock.setText("Unlock");
                 } else {
                     _raceLock.setText("Lock");
@@ -202,7 +201,7 @@ public class ChoicePanel extends JPanel {
     }
 
     private void setPreferredRaces() {
-        if(!_raceLocked){
+        if (!_raceLocked) {
             _raceBox.removeActionListener(_raceListener);
             _raceBox.removeAllItems();
             Vector<BaseRace> preferred = _character.getRankedRaces(16);
@@ -225,7 +224,7 @@ public class ChoicePanel extends JPanel {
     }
 
     private void setPreferredClasses() {
-        if(!_classLocked){
+        if (!_classLocked) {
             _classBox.removeActionListener(_classListener);
             _classBox.removeAllItems();
             Vector<BaseClass> preferred = _character.getRankedClasses(16);

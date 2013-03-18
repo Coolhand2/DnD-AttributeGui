@@ -40,10 +40,10 @@ public class GeneratePanel extends JPanel {
 
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                .addComponent(_button));
+                .addComponent(_button, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                .addComponent(_button));
+                .addComponent(_button, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
     }
 
     private void attachListeners() {

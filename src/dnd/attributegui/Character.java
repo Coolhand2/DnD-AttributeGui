@@ -26,8 +26,6 @@ public class Character {
     private int[] _attributes;
     private int _level;
     private Vector<ClassMap> _classMap;
-
-
     public static final BaseClass[] CLASSES = {
         new Ardent(), new Avenger(), new Barbarian(), new Bard(),
         new Battlemind(), new Cleric(), new Druid(), new Fighter(),
@@ -56,18 +54,18 @@ public class Character {
         _classMap = new Vector<>();
 
         BaseGenerator g = new SpecialSpread();
-        for(BaseClass bc : CLASSES){
-            for(BaseRace br : RACES){
+        for (BaseClass bc : CLASSES) {
+            for (BaseRace br : RACES) {
                 int[] attributes = g.getAttributes();
                 int[] bonuses = br.getBonuses();
                 int[] ranks = bc.getRanks();
                 int[] preferred = bc.getPreferred();
                 int[] sums = {0, 0, 0, 0, 0, 0};
-                for( int i = 0; i < 6; i++){
+                for (int i = 0; i < 6; i++) {
                     sums[i] += attributes[ranks[i]] + bonuses[i];
                 }
                 float average = 0;
-                for(int index : preferred) {
+                for (int index : preferred) {
                     average += sums[index];
                 }
                 average /= 3;
@@ -76,7 +74,6 @@ public class Character {
             }
         }
     }
-
 
     public void setGenerator(BaseGenerator g) {
         _generator = g;
@@ -103,8 +100,8 @@ public class Character {
         for (int i = 0; i < 6; i++) {
             sums[i] += attributes[ranks[i]] + bonuses[i];
         }
-        for( int i = 0; i < _level; i++) {
-            switch(i){
+        for (int i = 0; i < _level; i++) {
+            switch (i) {
                 case 4:
                 case 8:
                 case 14:
@@ -116,7 +113,7 @@ public class Character {
                     break;
                 case 11:
                 case 21:
-                    for(int k = 0; k < 6; k++){
+                    for (int k = 0; k < 6; k++) {
                         sums[k]++;
                     }
                     break;
@@ -134,26 +131,21 @@ public class Character {
         _listeners.add(al);
     }
 
-    private void rollAttributes() {
-        int[] local = {18, 15, 14, 10, 10, 8};
-        _attributes = local;
-    }
-
     private void notifyListeners() {
         for (ActionListener al : _listeners) {
             al.actionPerformed((ActionEvent) null);
         }
     }
 
-    public BaseClass getClassType(){
+    public BaseClass getClassType() {
         return _class;
     }
 
-    public Vector<BaseRace> getPreferredRaces(){
+    public Vector<BaseRace> getRankedRaces(int rank) {
         Vector<BaseRace> br = new Vector<>();
-        for(ClassMap item : _classMap){
-            if(item.getClassType().getName().equals(_class.getName())){
-                if(item.getAverage() == 16) {
+        for (ClassMap item : _classMap) {
+            if (item.getClassType().getName().equals(_class.getName())) {
+                if (item.getAverage() == rank) {
                     br.add(item.getRace());
                 }
             }
@@ -161,27 +153,15 @@ public class Character {
         return br;
     }
 
-    public Vector<BaseRace> getAverageRaces(){
-        Vector<BaseRace> br = new Vector<>();
-        for(ClassMap item : _classMap){
-            if(item.getClassType().getName().equals(_class.getName())){
-                if(item.getAverage() == 15) {
-                    br.add(item.getRace());
+    public Vector<BaseClass> getRankedClasses(int rank) {
+        Vector<BaseClass> bc = new Vector<>();
+        for (ClassMap item : _classMap) {
+            if (item.getRace().getName().equals(_race.getName())) {
+                if (item.getAverage() == rank) {
+                    bc.add(item.getClassType());
                 }
             }
         }
-        return br;
-    }
-
-    public Vector<BaseRace> getPoorRaces(){
-        Vector<BaseRace> br = new Vector<>();
-        for(ClassMap item : _classMap){
-            if(item.getClassType().getName().equals(_class.getName())){
-                if(item.getAverage() == 14) {
-                    br.add(item.getRace());
-                }
-            }
-        }
-        return br;
+        return bc;
     }
 }
